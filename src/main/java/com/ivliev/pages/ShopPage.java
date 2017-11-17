@@ -1,9 +1,6 @@
 package com.ivliev.pages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
@@ -42,11 +39,12 @@ public class ShopPage {
     }
 
     public void clickComputersButton() {
+        Selenide.sleep(1000);
         laptopsAndNetbooksButton.shouldBe(Condition.appear).click();
     }
 
     public void setLaptop(){
-        buttonMoreManufacturer.click();
+        buttonMoreManufacturer.shouldBe(Condition.appear).click();
         laptopOne.click();
         Selenide.sleep(1000);
         laptopTwo.click();
@@ -57,22 +55,26 @@ public class ShopPage {
     public void setPriceMin(String minPriceValue){
         minPrice.click();
         minPrice.setValue(minPriceValue);
+        minPrice.shouldHave(minPriceValue);
     }
 
     public void setPriceMax(String setPriceMax){
         maxPrice.click();
         maxPrice.setValue(setPriceMax);
+        maxPrice.shouldHave(setPriceMax);
     }
 
     public void setDiagonalMin(String setDiagonalMin){
         minDiagonal.click();
         minDiagonal.setValue(setDiagonalMin);
+        minDiagonal.shouldHave(setDiagonalMin);
     }
 
 
     public void setDiagonalMax(String setDiagonalMax){
         maxDiagonal.click();
         maxDiagonal.setValue(setDiagonalMax);
+        maxDiagonal.shouldHave(setDiagonalMax);
     }
 
     public void clickApplyButton(){
@@ -91,6 +93,7 @@ public class ShopPage {
         Selenide.sleep(3000);
         ElementsCollection elementsList = listWithSortElements.find(By.className("chzn-results")).findAll(By.tagName("li"));
         elementsList.get(1).click();
+        elementsList.shouldHave(CollectionCondition.size(4));
     }
 
        public void clickSortButtonDESC() {
@@ -99,6 +102,7 @@ public class ShopPage {
            Selenide.sleep(3000);
            ElementsCollection elementsList = listWithSortElements.find(By.className("chzn-results")).findAll(By.tagName("li"));
            elementsList.get(2).click();
+           elementsList.shouldHave(CollectionCondition.size(4));
     }
 
     public String storeFirstElement() {
@@ -119,6 +123,5 @@ public class ShopPage {
 
         Selenide.sleep(1000);
         Assert.assertEquals(storeFirstElement(), lastElementOnThePage.getText());
-
     }
 }
